@@ -1,0 +1,140 @@
+{
+	"info": {
+		"_postman_id": "33d9c874-58e1-410c-b621-ca9cbb93c2a9",
+		"name": "Star Wars API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15563533"
+	},
+	"item": [
+		{
+			"name": "Get a film",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}films/1",
+					"host": [
+						"{{baseUrl}}films"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get species for a film",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}films/1/species",
+					"host": [
+						"{{baseUrl}}films"
+					],
+					"path": [
+						"1",
+						"species"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a film's species summary of classifications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}films/1/species-summary",
+					"host": [
+						"{{baseUrl}}films"
+					],
+					"path": [
+						"1",
+						"species-summary"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "People name search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}people/Luke/search",
+					"host": [
+						"{{baseUrl}}people"
+					],
+					"path": [
+						"Luke",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Starships for a person by name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}people/Luke/starships",
+					"host": [
+						"{{baseUrl}}people"
+					],
+					"path": [
+						"Luke",
+						"starships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Galaxy population",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}galaxy-population",
+					"host": [
+						"{{baseUrl}}galaxy-population"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost/api/v1/",
+			"type": "string"
+		}
+	]
+}

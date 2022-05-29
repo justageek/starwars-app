@@ -22,9 +22,9 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
     Route::get('/films/{episode}', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilm']);
-    Route::get('/film-species/{episode}', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpecies']);
-    Route::get('/film-species-summary/{episode}', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpeciesSummary']);
-    Route::get('/people-search/{name}', [App\Http\Controllers\Api\v1\FilmsController::class, 'peopleSearch']);
-    Route::get('/starships-by-person/{name}', [App\Http\Controllers\Api\v1\FilmsController::class, 'starshipsByPerson']);
+    Route::get('/films/{episode}/species', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpecies']);
+    Route::get('/films/{episode}/species-summary', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpeciesSummary']);
+    Route::get('/people/{name}/search', [App\Http\Controllers\Api\v1\FilmsController::class, 'peopleSearch']);
+    Route::get('/people/{name}/starships', [App\Http\Controllers\Api\v1\FilmsController::class, 'starshipsByPerson']);
     Route::get('/galaxy-population', [App\Http\Controllers\Api\v1\FilmsController::class, 'galaxyPopulation']);
 });
