@@ -1,0 +1,83 @@
+{
+  "$id": "https://example.com/arrays.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "A representation of swapi api wra film response",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "$ref": "#/$defs/film"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "film": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The film title."
+        },
+        "episode_id": {
+          "type": "int",
+          "description": "The episode id"
+        },
+        "opening_crawl": {
+          "type": "string",
+          "description": "The film opening crawl."
+        },
+        "director": {
+          "type": "string",
+          "description": "The film director."
+        },
+        "producer": {
+          "type": "string",
+          "description": "The film producer."
+        },
+        "release_date": {
+          "type": "string",
+          "format": "date",
+          "description": "The film release date."
+        },
+        "characters": {
+          "type": "array",
+          "description": "The film character url list."
+        },
+        "planets": {
+          "type": "array",
+          "description": "The film planet url list."
+        },
+        "starships": {
+          "type": "string",
+          "description": "The film startship url list."
+        },
+        "vehicles": {
+          "type": "array",
+          "description": "The film vehicles url list."
+        },
+        "species": {
+          "type": "array",
+          "description": "The film species url list."
+        },
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "The film data created date."
+        },
+        "edited": {
+          "type": "string",
+          "format": "date",
+          "description": "The film data edited date."
+        },
+        "url": {
+          "type": "string",
+          "description": "The film api url."
+        }
+      }
+    }
+  }
+}
