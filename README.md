@@ -4,11 +4,11 @@ To install the application locally
  - Create a .env file using the .env.example file included
  - Run the following command to install and setup the Docker container:
  - ```
-  docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v $(pwd):/var/www/html \
-    -w /var/www/html \
-    laravelsail/php81-composer:latest \
+  docker run --rm
+    -u "$(id -u):$(id -g)"
+    -v $(pwd):/var/www/html
+    -w /var/www/html
+    laravelsail/php81-composer:latest
     composer install --ignore-platform-reqs```
 
  - Create a new .env file for your Laravel project using the .env.example file.
