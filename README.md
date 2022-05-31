@@ -3,7 +3,8 @@ To install the application locally
  - Clone the repo
  - Create a .env file using the .env.example file included
  - Run the following command to install and setup the Docker container:
- - ```docker run --rm \
+ - ```
+  docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v $(pwd):/var/www/html \
     -w /var/www/html \
