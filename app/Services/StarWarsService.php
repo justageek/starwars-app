@@ -11,28 +11,53 @@ class StarWarsService
 {
     protected string $lastError;
 
+    /**
+     * Constructor.
+     *
+     * @param StarWarsApiService $api
+     *   An instance of the StarWarsApiService.
+     */
     public function __construct(public StarWarsApiService $api) {
 
     }
 
-    protected function setLastError($msg)
+    /**
+     * Set the last error from use of the Star Wars API Service.
+     *
+     * @param string $msg
+     *   The error message
+     */
+    protected function setLastError(string $msg): void
     {
         $this->lastError = $msg;
         Log::error($msg);
     }
 
+    /**
+     * Get the last error that occurred with an api call.
+     *
+     * @return string
+     *   The last error message.
+     */
     public function getLastError(): string
     {
         return $this->lastError;
     }
 
-    public function getFilm($episode): array
+    /**
+     * Get details for a specific film by film api id value.
+     *
+     * @param int $film_id
+     *   The id of the film.
+     */
+    public function getFilm(int $film_id): array
     {
-        $data =  Cache::get('Film:' . $episode);
+        $cache_key = 'Film:' . $film_id;
+        $data =  Cache::get($cache_key);
         if (empty($data)) {
             try {
-                $film = $this->api->getFilm($episode);
-                Cache::put('Film:' . $episode, $film);
+                $film = $this->api->getFilm($film_id);
+                Cache::put($cache_key, $film);
                 return $film;
             } catch (\Exception $e) {
                 $this->setLastError($e->getMessage());
@@ -43,13 +68,22 @@ class StarWarsService
         return [];
     }
 
-    public function getFilmSpecies($episode): array|bool
+    /**
+     * Get details for species related to a specific film by film api id value.
+     *
+     * @param int $film_id
+     *   The id of the film.
+     *
+     * @return
+     *   An array of species items related to the film.
+     */
+    public function getFilmSpecies(int $film_id): array
     {
-        $data =  Cache::get('FilmSpecies:' . $episode);
+        $data =  Cache::get('FilmSpecies:' . $film_id);
         if (empty($data)) {
             try {
-               if ($film = $this->getFilm($episode)) {
-                   return $this->buildSpeciesCache($episode, $film);
+               if ($film = $this->getFilm($film_id)) {
+                   return $this->buildSpeciesCache($film_id, $film);
                }
             } catch (\Exception $e) {
                 $this->setLastError($e->getMessage());
@@ -58,11 +92,20 @@ class StarWarsService
         return $data;
     }
 
-    public function getFilmSpeciesSummary(int $episode): array
+    /**
+     * Get a summary of the species related to a specific film by film api id value.
+     *
+     * @param int $film_id
+     *   The id of the film.
+     *
+     * @return
+     *   An array of species classifications items related to the film.
+     */
+    public function getFilmSpeciesSummary(int $film_id): array
     {
         $summary = [];
-        if ($data = $this->getFilmSpecies($episode)) {
-            foreach ($data as $species_id => $species) {
+        if ($data = $this->getFilmSpecies($film_id)) {
+            foreach (array_values($data) as ($species) {
                 if (!array_key_exists($species['classification'], $summary)) {
                     $summary[$species['classification']] = [];
                 }
@@ -72,22 +115,38 @@ class StarWarsService
         return $summary;
     }
 
-    protected function buildSpeciesCache($episode, $film): array
+    /**
+     * Build a cache for a film's species detail.
+     *
+     * @param int $film_id
+     *   The id of the film.
+     *
+     * @return
+     *   An array of species details related to the film.
+     */
+    protected function buildSpeciesCache(int $film_id, array $film): array
     {
         $species = [];
         if (!empty($film['species'])) {
             foreach ($film['species'] as $url) {
                 if ($one_species = $this->api->httpGet($url)) {
-                    $url = Str::of($url);
-                    $id = $url->rtrim('/')->substr(-1);
                     $species[] = $one_species;
                 }
             }
         }
-        Cache::put('FilmSpecies:' . $episode, $species);
+        Cache::put('FilmSpecies:' . $film_id, $species);
         return $species;
     }
 
+    /**
+     * Search for person data by person name string.
+     *
+     * @param string $name
+     *   The name used for the search.
+     *
+     * @return array
+     *   An array of search results if found.
+     */
     public function peopleSearch(string $name): array
     {
         $results = $this->api->peopleSearch($name);
@@ -97,7 +156,16 @@ class StarWarsService
         return [];
     }
 
-    public function starshipsByPerson($name): array
+    /**
+     * Search for starships related to a person data by person name string.
+     *
+     * @param string $name
+     *   The name used for the search.
+     *
+     * @return array
+     *   An array of starship results if found.
+     */
+    public function starshipsByPerson(string $name): array
     {
         $ships = [];
         if ($person = $this->peopleSearch($name)) {
@@ -116,34 +184,53 @@ class StarWarsService
         return $ships;
     }
 
-    public function getStarship($ship_id): array
+    /**
+     * Get details for a specific starship by id value.
+     */
+    public function getStarship(int $ship_id): array
     {
-        $data = Cache::get('Starship:' . $ship_id);
+        $cache_key = 'Starship:' . $ship_id;
+        $data = Cache::get($cache_key);
         if (empty($data)) {
             if ($data = $this->api->getShipById($ship_id)) {
-                Cache::put('Starship:' . $ship_id, $data);
+                Cache::put($cache_key, $data);
                 return $data;
+            } else {
+                return [];
             }
         }
         return $data;
     }
 
+    /**
+     * Get details about all planets in the Star Wars univere.
+     *
+     * @return array
+     *   An array of plnet items.
+     */
     public function planets(): array
     {
         $data = Cache::get('Planets');
         if (empty($data)) {
             if (($data = $this->api->planets()) && !empty($data['results'])) {
                 Cache::put('Planets', $data);
+            } else {
+                return [];
             }
         }
         return $data;
     }
 
+    /**
+     * Calculate and return the total population of the Star Wars galasy.
+     *
+     * @return string
+     *   A formmated population total.
+     */
     public function galaxyPopulation(): string
     {
         $population = 0;
         if ($planets = $this->planets()) {
-            logger($planets);
             foreach ($planets as $planet) {
                 $population+= (int) $planet['population'];
             }
