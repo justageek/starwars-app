@@ -2,6 +2,7 @@ To install the application locally
  - Start Docker on your local machine
  - Clone the repo
  - Create a .env file using the .env.example file included
+-
  - Run the following command to install and setup the Docker container:
 ```
 docker run --rm \
@@ -12,7 +13,6 @@ docker run --rm \
     composer install --ignore-platform-reqs
   ```
 
- - Create a new .env file for your Laravel project using the .env.example file.
  - Create the following alias in your terminal, alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
  - Start the 'sail' docker environment with 'sail up', if you are unable to create the bash alias, use ./vendor/bin/sail up
 

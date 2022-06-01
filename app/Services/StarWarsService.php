@@ -105,7 +105,7 @@ class StarWarsService
     {
         $summary = [];
         if ($data = $this->getFilmSpecies($film_id)) {
-            foreach (array_values($data) as ($species) {
+            foreach (array_values($data) as $species) {
                 if (!array_key_exists($species['classification'], $summary)) {
                     $summary[$species['classification']] = [];
                 }
