@@ -27,4 +27,5 @@ Route::prefix('v1')->group(function () {
     Route::get('/people/{name}/search', [App\Http\Controllers\Api\v1\FilmsController::class, 'peopleSearch']);
     Route::get('/people/{name}/starships', [App\Http\Controllers\Api\v1\FilmsController::class, 'starshipsByPerson']);
     Route::get('/galaxy-population', [App\Http\Controllers\Api\v1\FilmsController::class, 'galaxyPopulation']);
+    Route::get('/planets', [App\Http\Controllers\Api\v1\FilmsController::class, 'planets']);
 });

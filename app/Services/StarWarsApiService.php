@@ -97,13 +97,6 @@ class StarWarsApiService
      */
     public function planets(): array
     {
-        $planets = [];
-        if ($data = $this->httpGet(self::BASE_URL. '/planets/')
-        ) {
-            foreach ($data['results'] as $planet) {
-                $planets[] = $planet;
-            }
-        }
-        return $planets;
+        return $this->httpGet(self::BASE_URL. '/planets/');
     }
 }

@@ -115,4 +115,9 @@ class FilmsController extends Controller
             'data' => $results,
         ];
     }
+
+    public function planets()
+    {
+        return $this->formatResults($this->starWars->planets());
+    }
 }

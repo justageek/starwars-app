@@ -210,15 +210,16 @@ class StarWarsService
      */
     public function planets(): array
     {
-        $data = Cache::get('Planets');
-        if (empty($data)) {
+        $planets = Cache::get('Planets');
+        if (empty($planets)) {
             if (($data = $this->api->planets()) && !empty($data['results'])) {
-                Cache::put('Planets', $data);
-            } else {
-                return [];
+                foreach ($data['results'] as $planet) {
+                    $planets[] = $planet;
+                }
+                Cache::put('Planets', $planets);
             }
         }
-        return $data;
+        return $planets;
     }
 
     /**
