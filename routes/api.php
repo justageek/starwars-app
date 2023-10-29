@@ -21,6 +21,7 @@ Route::prefix('v1')->group(function () {
 });
 
 Route::prefix('v1')->group(function () {
+    Route::get('/films', [App\Http\Controllers\Api\v1\FilmsController::class, 'films']);
     Route::get('/films/{film_id}', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilm']);
     Route::get('/films/{film_id}/species', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpecies']);
     Route::get('/films/{film_id}/species-summary', [App\Http\Controllers\Api\v1\FilmsController::class, 'getFilmSpeciesSummary']);

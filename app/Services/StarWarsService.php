@@ -22,6 +22,27 @@ class StarWarsService
     }
 
     /**
+     * Get details for all films.
+     */
+    public function films(): array
+    {
+        $cache_key = 'Films:all';
+        $data =  Cache::get($cache_key);
+        if (empty($data)) {
+            try {
+                $film = $this->api->films();
+                Cache::put($cache_key, $film);
+                return $film;
+            } catch (\Exception $e) {
+                $this->setLastError($e->getMessage());
+            }
+        } else {
+            return $data;
+        }
+        return [];
+    }
+
+    /**
      * Set the last error from use of the Star Wars API Service.
      *
      * @param string $msg
@@ -42,6 +63,26 @@ class StarWarsService
     public function getLastError(): string
     {
         return $this->lastError;
+    }
+
+    public function getApiOrCache(string $url, string $cache_key = '')
+    {
+        if (empty($cache_key)) {
+            $cache_key = 'cache:'. $url;
+        }
+        $data =  Cache::get($cache_key);
+        if (empty($data)) {
+            try {
+                $data = $this->api->httpGet($url);
+                Cache::put($cache_key, $data);
+                return $data;
+            } catch (\Exception $e) {
+                $this->setLastError($e->getMessage());
+            }
+        } else {
+            return $data;
+        }
+        return [];
     }
 
     /**

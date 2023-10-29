@@ -32,6 +32,17 @@ class StarWarsApiService
     }
 
     /**
+     * Get the details for all films.
+     *
+     * @return array
+     *   An array representing the film json details.
+     */
+    public function films(): array
+    {
+        return $this->httpGet(self::BASE_URL . 'films');
+    }
+
+    /**
      * Get the details for a single film from the api.
      *
      * @param int $film_id

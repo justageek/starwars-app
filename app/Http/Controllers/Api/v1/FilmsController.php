@@ -21,6 +21,19 @@ class FilmsController extends Controller
     /**
      * Get a film by its api id.
      *
+     * @return string
+     *   JSON data results.
+     */
+    public function films(): array
+    {
+        return $this->formatResults(
+            $this->starWars->films()
+        );
+    }
+
+    /**
+     * Get a film by its api id.
+     *
      * @param int $film_id
      *   The film ID.
      *
@@ -29,6 +42,7 @@ class FilmsController extends Controller
      */
     public function getFilm(int $film_id): array
     {
+        dd($this->starWars->getFilm($film_id));
         return $this->formatResults(
             $this->starWars->getFilm($film_id)
         );
